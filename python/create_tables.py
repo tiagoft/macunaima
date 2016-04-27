@@ -27,7 +27,7 @@ c.execute('''CREATE TABLE IF NOT EXISTS media
                      file text)''')
 
 c.execute('''CREATE TABLE IF NOT EXISTS features
-                     (id int PRIMARY KEY,
+                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
                      media_id int,
                      algorithm text,
                      metadata text,
