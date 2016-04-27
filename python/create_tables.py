@@ -14,7 +14,7 @@ if not os.path.exists(constants.dbdir):
 conn = sqlite3.connect(constants.dbfile)
 c = conn.cursor()
 c.execute('''CREATE TABLE IF NOT EXISTS media
-                     (id int PRIMARY KEY,
+                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
                      title text,
                      artist text,
                      album text,

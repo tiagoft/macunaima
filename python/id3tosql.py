@@ -2,7 +2,6 @@
 import eyed3
 import sqlite3
 import os
-import uuid
 
 import constants
 
@@ -11,7 +10,6 @@ import constants
 
 def id3tosql(mp3_filename, dbfile):
     metadata = eyed3.load(mp3_filename).tag
-    new_id = uuid.uuid4().int
 
     if metadata.genre.id == 255:
         genre = "None"
@@ -28,9 +26,6 @@ def id3tosql(mp3_filename, dbfile):
     else:
         recording_date = metadata.recording_date
 
-
-
-    print str(new_id)
     print metadata.title
     print metadata.artist
     print metadata.album
@@ -39,9 +34,8 @@ def id3tosql(mp3_filename, dbfile):
     print genre
     print mp3_filename
 
-    query = "INSERT INTO media (id, title, artist, album, recording_date, "+\
+    query = "INSERT INTO media (title, artist, album, recording_date, "+\
                 "original_release_date, genre, file, user) VALUES ('" +\
-                            str(new_id) + "', '" +\
                             unicode(metadata.title) + "', '" +\
                             unicode(metadata.artist) + "', '" +\
                             unicode(metadata.album) + "', " +\
