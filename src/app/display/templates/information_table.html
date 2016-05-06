@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add New File</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<form>
+
+  <table>
+  {% for p in property_list %}
+  <tr>
+    <td>{{p.name}}</td>
+    <td>
+      {% if p.type == 'line' %}
+      <input type="text" name="{{p.name}}" value="{{p.value}}">
+      {% elif p.type == 'file' %}
+      <input type="file" name="{{p.name}}" value="{{p.value}}">
+      {% elif p.type == 'box' %}
+      <textarea name="{{p.name}}" rows="10" cols="30">{{p.value}}</textarea>
+      {% endif %}
+  </tr>
+  {% endfor %}
+  </table>
+
+</form>
+
+</body>
+</html>
+

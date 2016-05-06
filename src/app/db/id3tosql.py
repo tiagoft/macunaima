@@ -3,9 +3,6 @@ import eyed3
 import sqlite3
 import os
 
-from .. import  constants
-
-
 
 
 def id3tosql(mp3_filename, dbfile):
@@ -26,13 +23,13 @@ def id3tosql(mp3_filename, dbfile):
     else:
         recording_date = metadata.recording_date
 
-    print metadata.title
-    print metadata.artist
-    print metadata.album
-    print metadata.recording_date
-    print metadata.original_release_date
-    print genre
-    print mp3_filename
+    #print metadata.title
+    #print metadata.artist
+    #print metadata.album
+    #print metadata.recording_date
+    #print metadata.original_release_date
+    #print genre
+    #print mp3_filename
 
     query = "INSERT INTO media (title, artist, album, recording_date, "+\
                 "original_release_date, genre, file, user) VALUES ('" +\
@@ -44,7 +41,7 @@ def id3tosql(mp3_filename, dbfile):
                             genre + "', '" +\
                             mp3_filename + "', '" +\
                             "admin');"
-    print query
+    #print query
 
 
     conn = sqlite3.connect(dbfile)

@@ -3,3 +3,6 @@
 
 dbdir = "../db"
 dbfile =  dbdir + "/macunaima.db"
+
+
+template_directory = "app/display/templates"
