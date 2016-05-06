@@ -3,7 +3,7 @@ import eyed3
 import sqlite3
 import os
 
-import constants
+from .. import  constants
 
 
 
