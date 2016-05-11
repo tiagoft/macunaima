@@ -7,6 +7,7 @@ import constants
 import app.insert
 
 urls = (
+    '/shutdown', 'shutdown',
     '/(.*)', 'hello',
 
     )
@@ -29,6 +30,13 @@ class hello:
             p = app.insert.Insert(render)
             return p.GET(None)
             #return render.information_table(name=name)
+
+
+class shutdown:
+    def GET(self):
+        app_object.stop()
+        exit()
+        return 0
 
 
 if __name__ == "__main__":
