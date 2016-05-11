@@ -1,0 +1,35 @@
+body {
+  margin:30;
+  padding:50;
+  text-align:center;
+}
+
+#pagewidth {
+  width:600px;
+  text-align:left;
+  margin:0 auto;
+}
+
+#header {
+  position:relative;
+  height:100px;
+  background-color:#06DD06;
+  width:100%;
+  display:block;
+  overflow:auto;
+}
+
+#maincol {
+  background-color:#FFFFFF;
+  position:relative;
+}
+
+#footer {
+  height:100px;
+  background-color:#06DD06;
+  clear:both;
+  display:block;
+  overflow:auto;
+}
+
+

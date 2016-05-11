@@ -15,7 +15,7 @@ class Insert():
 
     def GET(self, name):
 
-        return self.render.information_table(property_list = [ {'name': 'Title', 'value': '', 'type': 'line'},
+        return self.render.add_new(property_list = [ {'name': 'Title', 'value': '', 'type': 'line'},
                                                                 {'name': 'Artist', 'value': 'No one', 'type': 'box'},
                                                                 {'name': 'File', 'value': 'file.mp3', 'type': 'file'}])
 

@@ -8,6 +8,7 @@ import app.insert
 
 urls = (
     '/(.*)', 'hello',
+
     )
 
 app_object = web.application(urls, globals())
