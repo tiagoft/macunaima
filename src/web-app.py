@@ -5,11 +5,12 @@ import constants
 
 #import app.db.id3tosql
 import app.insert
+import app.media
 
 urls = (
     '/shutdown', 'shutdown',
-    '/(.*)', 'hello',
-
+    '/hello', 'hello',
+    '/media', 'app.media.Media',
     )
 
 app_object = web.application(urls, globals())
@@ -21,15 +22,10 @@ render = render_jinja(
 
 
 class hello:
-    def GET(self, name):
-        if not name:
-            name = 'World'
-            return 'Hello, ' + name + '!'
+    def GET(self):
+        p = app.insert.Insert(render)
+        return p.GET(None)
 
-        else:
-            p = app.insert.Insert(render)
-            return p.GET(None)
-            #return render.information_table(name=name)
 
 
 class shutdown:

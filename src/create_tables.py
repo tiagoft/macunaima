@@ -11,12 +11,17 @@ import constants
 if not os.path.exists(constants.dbdir):
     os.makedirs(constants.dbdir)
 
+
+#query = "INSERT INTO media (title, artist, album, recording_date, "+\
+#  4            "original_release_date, genre, file, user, composer) VALUES ('"
+
 conn = sqlite3.connect(constants.dbfile)
 c = conn.cursor()
 c.execute('''CREATE TABLE IF NOT EXISTS media
                      (id INTEGER PRIMARY KEY AUTOINCREMENT,
                      title text,
                      artist text,
+                     composer text,
                      album text,
                      recording_date int,
                      original_release_date int,
