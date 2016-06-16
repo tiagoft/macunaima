@@ -5,7 +5,7 @@ import constants
 
 class Media():
     def __init__(self):
-        pass
+        self.gen_id = None
 
     def GET(self):
         get_input = web.input(_method='get')
@@ -38,7 +38,8 @@ class Media():
         except:
             original_release_date = "0"
 
-        mp3_filename = web.debug(mp3_file['mp3_file'].filename)
+        mp3_filename = web.input(mp3_file={}).mp3_file.filename
+
 
         query = "INSERT INTO media (title, artist, album, recording_date, "+\
            "original_release_date, genre, file, user, comments, composer)"+\
@@ -54,11 +55,20 @@ class Media():
                             unicode(comments) + "', '" +\
                             unicode(composer) + "');"
 
+
         print query
 
         conn = sqlite3.connect(constants.dbfile)
         c = conn.cursor()
         c.execute(query)
         conn.commit()
+
+        if mp3_filename is not '':
+            gen_tag = c.lastrowid
+            filename = str(gen_tag) + "_" + mp3_filename
+            fout = open(constants.files_directory +'/'+ filename,'w')
+            fout.write(web.input(mp3_file={}).mp3_file.file.read())
+            fout.close()
+
 
         return "OK"
