@@ -29,12 +29,12 @@ class Media():
         comments = get_input.get('comments')
 
         try:
-            recording_date = str(int(recording_date))
+            recording_date = str(int(unicode(recording_date)))
         except:
             recording_date = "0"
 
         try:
-            original_release_date = str(int(original_release_date))
+            original_release_date = str(int(unicode(original_release_date)))
         except:
             original_release_date = "0"
 
@@ -54,10 +54,8 @@ class Media():
                             "admin', '" +\
                             unicode(url) + "', '" + \
                             unicode(comments) + "', '" +\
-                            unicode(composer) + "');"
+                            unicode(composer) + "');".decode('unicode_escape')
 
-
-        print query
 
         conn = sqlite3.connect(constants.dbfile)
         c = conn.cursor()
