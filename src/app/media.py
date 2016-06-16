@@ -42,7 +42,7 @@ class Media():
 
 
         query = "INSERT INTO media (title, artist, album, recording_date, "+\
-           "original_release_date, genre, file, user, comments, composer)"+\
+          "original_release_date, genre, file, user, link, comments, composer)"+\
                             "VALUES ('" +\
                             unicode(title) + "', '" +\
                             unicode(artist) + "', '" +\
@@ -52,6 +52,7 @@ class Media():
                             unicode(genre) + "', '" +\
                             unicode(mp3_filename) + "', '" +\
                             "admin', '" +\
+                            unicode(url) + "', '" + \
                             unicode(comments) + "', '" +\
                             unicode(composer) + "');"
 
@@ -70,5 +71,5 @@ class Media():
             fout.write(web.input(mp3_file={}).mp3_file.file.read())
             fout.close()
 
-
-        return "OK"
+        return web.seeother('/hello')
+        #return "OK"
