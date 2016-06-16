@@ -17,7 +17,7 @@ urls = (
     '/media', 'app.media.Media',
     )
 
-app_object = web.application(urls, globals())
+app_object = web.application(urls, globals()).wsgifunc()
 
 render = render_jinja(
          constants.template_directory,   # Set template directory.
@@ -37,7 +37,6 @@ class shutdown:
         app_object.stop()
         exit()
         return 0
-
 
 if __name__ == "__main__":
     app_object.run()
