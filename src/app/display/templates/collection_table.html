@@ -1,0 +1,16 @@
+
+  <table>
+
+    {% for m in media_elements %}
+    <form action="media" enctype="multipart/form-data" method="post">
+
+    <tr>
+    <td>{{m.title}}</td>
+    <td>{{m.artist}}</td>
+    <td>{{m.id}}</td>
+    </tr>
+    </form>
+    {% endfor %}
+ </table>
+ </form>
+

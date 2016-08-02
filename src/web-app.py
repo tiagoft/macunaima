@@ -10,11 +10,13 @@ import constants
 #import app.db.id3tosql
 import app.insert
 import app.media
+import app.collection
 
 urls = (
     '/shutdown', 'shutdown',
     '/hello', 'hello',
     '/media', 'app.media.Media',
+    '/collection', 'app.collection.Collection',
     '/info', 'info',
     )
 
@@ -46,5 +48,6 @@ class shutdown:
         return 0
 
 if __name__ == "__main__":
+    application = web.application(urls, globals())
     application.run()
 
