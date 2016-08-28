@@ -3,15 +3,40 @@ import sqlite3
 
 import constants
 
+from web.contrib.template import render_jinja
+
+render = render_jinja(
+         constants.mypath + "/" + constants.template_directory,   # Set template directory.
+         encoding = 'utf-8',                         # Encoding.
+         )
+
 class Media():
     def __init__(self):
         self.gen_id = None
 
     def GET(self):
         get_input = web.input(_method='get')
+        media_id = get_input.get('id')
 
-        print get_input
-        return [(i, get_input[i]) for i in get_input]
+        query = "select title,artist,file,comments from MEDIA where ID=" + \
+                media_id
+
+        conn = sqlite3.connect(constants.dbfile)
+        c = conn.cursor()
+        data = {}
+        for d in c.execute(query):
+            data['title'] = d[0]
+            data['artist'] = d[1]
+            data['file'] = d[2]
+            data['comments'] = d[3]
+
+        conn.commit()
+
+
+
+        return data
+
+        #return #[(i, get_input[i]) for i in get_input]
 
     def POST(self):
         get_input = web.input(_method='post')

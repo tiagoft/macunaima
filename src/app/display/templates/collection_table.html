@@ -2,14 +2,17 @@
   <table>
 
     {% for m in media_elements %}
-    <form action="media" enctype="multipart/form-data" method="post">
+    <tr>
+      <td>Title</td>
+      <td>Artist</td>
+      <td>Actions</td>
+    </tr>
 
     <tr>
     <td>{{m.title}}</td>
     <td>{{m.artist}}</td>
-    <td>{{m.id}}</td>
+    <td><a href='/media?id={{m.id}}'>View</a></td>
     </tr>
-    </form>
     {% endfor %}
  </table>
  </form>
