@@ -3,6 +3,13 @@ import sqlite3
 
 import constants
 
+from web.contrib.template import render_jinja
+
+render = render_jinja(
+         constants.mypath + "/" + constants.template_directory,   # Set template directory.
+         encoding = 'utf-8',                         # Encoding.
+         )
+
 class Media():
     def __init__(self):
         self.gen_id = None
