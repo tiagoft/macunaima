@@ -27,14 +27,15 @@ class Media():
         for d in c.execute(query):
             data['title'] = d[0]
             data['artist'] = d[1]
-            data['file'] = d[2]
+            data['file'] = "/static/audio/" + media_id + "_" + d[2]
             data['comments'] = d[3]
 
         conn.commit()
 
 
 
-        return data
+        return render.media_player(media_elements = data)
+
 
         #return #[(i, get_input[i]) for i in get_input]
 

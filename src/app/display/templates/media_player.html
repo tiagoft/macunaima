@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Macunaima Media Player</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" media="screen" href="static/macunaima.css" type="text/css" />
+</head>
+<body>
+
+<div id="pagewidth">
+  <div id="header">
+    <h2>{{media_elements.title}} - {{media_elements.artist}}</h2>
+  </div>
+  <div id="wrapper">
+    <div id="maincol">
+      <p>
+     <audio controls>
+     <source src="{{media_elements.file}}" type="audio/mpeg">
+     Your browser does not support the audio element.
+     </audio>
+      </p>
+      <p>
+      {{media_elements.comments}}
+      </p>
+
+    </div>
+  </div>
+  <div id="footer">
+  Copyleft?
+  </div>
+</div>
+
+</body>
+</html>
+
