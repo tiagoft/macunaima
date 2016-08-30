@@ -11,6 +11,7 @@ import constants
 import app.insert
 import app.media
 import app.collection
+import app.playlist
 
 urls = (
     '/shutdown', 'shutdown',
@@ -18,6 +19,7 @@ urls = (
     '/media', 'app.media.Media',
     '/collection', 'app.collection.Collection',
     '/info', 'info',
+    '/playlist', 'app.playlist.Playlist'
     )
 
 application = web.application(urls, globals()).wsgifunc()
