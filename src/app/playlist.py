@@ -14,7 +14,8 @@ render = render_jinja(
 
 
 class Playlist():
-    def get_json(self, method='NEW', min_index=0, max_index=10, reject=None,
+    def get_json(self, method='NEW', offset=0, limit=10, reject=None,
+
             accept_only=None):
 
         str_accept = ""
@@ -31,14 +32,16 @@ class Playlist():
             str_accept += "-1) "
 
         if method == 'NEW':
-            str_sort = " ORDER BY id DESC"
+            str_sort = " ORDER BY id DESC "
         elif method == 'RAND':
-            str_sort = " ORDER BY RANDOM()"
+            str_sort = " ORDER BY RANDOM() "
         else:
             return None
 
+        str_limits = " LIMIT " + str(limit) + " OFFSET " + str(offset) + " "
+
         query = "SELECT id, title, artist from MEDIA" + str_rejection\
-                    + str_accept + str_sort + ";"
+                    + str_accept + str_sort + str_limits + ";"
 
         conn = sqlite3.connect(constants.dbfile)
         c = conn.cursor()
@@ -65,20 +68,30 @@ class Playlist():
             method = data['method']
 
         if 'reject' in data:
-            data = web.input(reject=[])
-            rejection = data.reject
+            data0 = web.input(reject=[])
+            rejection = data0.reject
         else:
             rejection = None
 
         if 'accept' in data:
-            data = web.input(accept=[])
-            accept = data.accept
+            data0 = web.input(accept=[])
+            accept = data0.accept
         else:
             accept= None
 
+        if 'offset' in data:
+            offset = data['offset']
+        else:
+            offset = 0
+
+        if 'limit' in data:
+            limit = data['limit']
+        else:
+            limit = 10
 
 
-        return self.get_json(method, reject=rejection, accept_only=accept)
+        return self.get_json(method, reject=rejection, accept_only=accept,
+                offset=offset, limit=limit)
 
 #        ret = ""
 #        for row in c.execute(query):
