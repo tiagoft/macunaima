@@ -1,6 +1,19 @@
 # Databases
 *.db
 
+# Media
+*.mp3
+*.ogg
+*.wav
+*.flac
+*.aiff
+*.aif
+*.au
+
+# Temporary files
+*~
+*.swp
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
