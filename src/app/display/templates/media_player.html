@@ -26,7 +26,6 @@ curr_id = -1;
 reload = function(query) {
   console.log(query);
 
-
   var json_action = $.getJSON(query, function(info){
     console.log(info);
     console.log(info[0].file + " " +  info[0].id);
