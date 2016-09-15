@@ -18,6 +18,8 @@ class Collection():
     def GET(self):
         data = playlist.Playlist().GET()
         data = json.loads(data)
+
+        web.header('Content-Type', 'text/HTML')
         return render.collection_view(media_elements = data)
 #        ret = ""
 #        for row in c.execute(query):

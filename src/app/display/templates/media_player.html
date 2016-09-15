@@ -4,24 +4,72 @@
 <title>Macunaima Media Player</title>
 <meta charset="utf-8" />
 <link rel="stylesheet" media="screen" href="static/macunaima.css" type="text/css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<script>
+$_GET = function(name){
+     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+     if (results==null){
+      return null;
+     }
+     else{
+      return results[1] || 0;
+     }
+}
+
+
+//alert($_GET('accept'));
+
+str_query = "playlist?method=RAND&limit=1";
+
+reload = function(query) {
+  console.log(query);
+
+
+  var json_action = $.getJSON(query, function(info){
+    console.log(info);
+    console.log(info[0].file + " " +  info[0].id);
+    //$(document).attr('location').href=window.location.href;
+
+    $("#audio").attr({
+       "src" : info[0].file
+    });
+
+    $("#title").text(info[0].title);
+
+  });
+
+}
+
+$(document).ready(function(){
+  if ($_GET('accept') != null) {
+  str_query += "&accept=" + $_GET('accept');
+  }
+  reload(str_query);
+  $("#Reload").click(function(){
+    reload(str_query);
+  });
+});
+</script>
+
+
 </head>
+
 <body>
 
 <div id="pagewidth">
   <div id="header">
-    <h2>{{media_elements.title}} - {{media_elements.artist}}</h2>
+    <h2 id="title"></h2>
   </div>
   <div id="wrapper">
     <div id="maincol">
       <p>
-     <audio controls>
-     <source src="{{media_elements.file}}" type="audio/mpeg">
-     Your browser does not support the audio element.
-     </audio>
+      <audio controls>
+      <source id="audio" src="" type="audio/mpeg">
+      Your browser does not support the audio element.
+      </audio>
       </p>
-      <p>
-      {{media_elements.comments}}
-      </p>
+      <button id="Reload">Refresh</button>
 
     </div>
   </div>

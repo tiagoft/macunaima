@@ -31,7 +31,6 @@ render = render_jinja(
          encoding = 'utf-8',                         # Encoding.
          )
 
-
 class hello:
     def GET(self):
         p = app.insert.Insert(render)

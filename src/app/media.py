@@ -15,26 +15,7 @@ class Media():
         self.gen_id = None
 
     def GET(self):
-        get_input = web.input(_method='get')
-        media_id = get_input.get('id')
-
-        query = "select title,artist,file,comments from MEDIA where ID=" + \
-                media_id
-
-        conn = sqlite3.connect(constants.dbfile)
-        c = conn.cursor()
-        data = {}
-        for d in c.execute(query):
-            data['title'] = d[0]
-            data['artist'] = d[1]
-            data['file'] = "/static/audio/" + media_id + "_" + d[2]
-            data['comments'] = d[3]
-
-        conn.commit()
-
-
-
-        return render.media_player(media_elements = data)
+        return render.media_player()
 
 
         #return #[(i, get_input[i]) for i in get_input]

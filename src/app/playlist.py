@@ -40,14 +40,14 @@ class Playlist():
 
         str_limits = " LIMIT " + str(limit) + " OFFSET " + str(offset) + " "
 
-        query = "SELECT id, title, artist from MEDIA" + str_rejection\
+        query = "SELECT id, title, artist, file from MEDIA" + str_rejection\
                     + str_accept + str_sort + str_limits + ";"
 
         conn = sqlite3.connect(constants.dbfile)
         c = conn.cursor()
         json_data = []
         for d in c.execute(query):
-            json_data.append({'title': d[1], 'artist': d[2], 'id': d[0]})
+            json_data.append({'title': d[1], 'artist': d[2], 'id': d[0], 'file': d[3]})
 
         conn.commit()
 
@@ -90,6 +90,7 @@ class Playlist():
             limit = 10
 
 
+        web.header('Content-Type', 'text/plain')
         return self.get_json(method, reject=rejection, accept_only=accept,
                 offset=offset, limit=limit)
 
