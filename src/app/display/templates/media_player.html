@@ -21,6 +21,7 @@ $_GET = function(name){
 //alert($_GET('accept'));
 
 str_query = "playlist?method=RAND&limit=1";
+curr_id = -1;
 
 reload = function(query) {
   console.log(query);
@@ -37,6 +38,8 @@ reload = function(query) {
 
     $("#title").text(info[0].title);
 
+    curr_id = info[0].id;
+
   });
 
 }
@@ -49,6 +52,15 @@ $(document).ready(function(){
   $("#Reload").click(function(){
     reload(str_query);
   });
+  $("#Reject").click(function(){
+    str_query += "&reject=" + curr_id;
+    reload(str_query);
+  });
+  $("#Reject").click(function(){
+    str_query += "&accept=" + curr_id;
+  });
+
+
 });
 </script>
 
@@ -69,7 +81,10 @@ $(document).ready(function(){
       Your browser does not support the audio element.
       </audio>
       </p>
-      <button id="Reload">Refresh</button>
+      <button id="Reject">Dislike</button>
+      <button id="Reload">Skip</button>
+      <button id="Like">Like</button>
+
 
     </div>
   </div>
