@@ -59,7 +59,7 @@ $(document).ready(function(){
     str_query += "&reject=" + curr_id;
     reload(str_query);
   });
-  $("#Reject").click(function(){
+  $("#Accept").click(function(){
     str_query += "&accept=" + curr_id;
   });
 
@@ -79,7 +79,7 @@ $(document).ready(function(){
   <div id="wrapper">
     <div id="maincol">
       <p>
-      <audio id="audiocontrols" controls width="720" height="405">
+      <audio id="audiocontrols" controls width="720" height="405" autoplay>
 
       <source id="audio" src="static/audio/1/01_-_Trilha_01.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
