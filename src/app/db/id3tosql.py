@@ -3,8 +3,6 @@ import eyed3
 import sqlite3
 import os
 
-
-
 def id3tosql(mp3_filename, dbfile):
     metadata = eyed3.load(mp3_filename).tag
 
