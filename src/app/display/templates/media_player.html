@@ -31,10 +31,13 @@ reload = function(query) {
     console.log(info[0].file + " " +  info[0].id);
     //$(document).attr('location').href=window.location.href;
 
-    $("#audio").attr({
-       "src" : info[0].file
-    });
 
+    $("#audio").attr("src", "static/" + info[0].file).detach().appendTo("#audiocontrols");
+/*
+    $("#audio").attr({
+       "src" : "static/" + info[0].file
+    });
+*/
     $("#title").text(info[0].title);
 
     curr_id = info[0].id;
@@ -75,8 +78,9 @@ $(document).ready(function(){
   <div id="wrapper">
     <div id="maincol">
       <p>
-      <audio controls>
-      <source id="audio" src="" type="audio/mpeg">
+      <audio id="audiocontrols" controls width="720" height="405">
+
+      <source id="audio" src="static/audio/1/01_-_Trilha_01.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
       </audio>
       </p>
