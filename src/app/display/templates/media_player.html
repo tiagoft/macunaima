@@ -33,6 +33,7 @@ reload = function(query) {
 
 
     $("#audio").attr("src", "static/" + info[0].file).detach().appendTo("#audiocontrols");
+    $("#audiocontrols").load();
 /*
     $("#audio").attr({
        "src" : "static/" + info[0].file
