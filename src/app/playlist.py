@@ -6,6 +6,8 @@ from web.contrib.template import render_jinja
 import json
 
 import constants
+import engines.nearest as neigh
+import features
 
 render = render_jinja(
          constants.mypath + "/" + constants.template_directory,   # Set template directory.
@@ -14,10 +16,23 @@ render = render_jinja(
 
 
 class Playlist():
-    def get_json(self, method='NEW', offset=0, limit=10, reject=None,
+    def query_db(self, query):
+        conn = sqlite3.connect(constants.dbfile)
+        c = conn.cursor()
+        json_data = []
+        for d in c.execute(query):
+            json_data.append({'title': d[1], 'artist': d[2], 'id': d[0], 'file': d[3]})
 
-            accept_only=None):
+        conn.commit()
 
+        json_data = json.dumps(json_data)
+        print query
+        print json_data
+        return json_data
+
+
+
+    def recommend_new_rand(self, method, offset, limit, reject, accept_only):
         str_accept = ""
         str_rejection = ""
         if reject is not None:
@@ -33,27 +48,36 @@ class Playlist():
 
         if method == 'NEW':
             str_sort = " ORDER BY id DESC "
-        elif method == 'RAND':
-            str_sort = " ORDER BY RANDOM() "
         else:
-            return None
+            str_sort = " ORDER BY RANDOM() "
 
         str_limits = " LIMIT " + str(limit) + " OFFSET " + str(offset) + " "
 
         query = "SELECT id, title, artist, file from MEDIA" + str_rejection\
                     + str_accept + str_sort + str_limits + ";"
 
-        conn = sqlite3.connect(constants.dbfile)
-        c = conn.cursor()
-        json_data = []
-        for d in c.execute(query):
-            json_data.append({'title': d[1], 'artist': d[2], 'id': d[0], 'file': d[3]})
+        return self.query_db(query)
 
-        conn.commit()
+    def get_json(self, method='NEW', offset=0, limit=10, reject=None,
+            accept_only=None):
 
-        json_data = json.dumps(json_data)
+        print reject, accept_only
 
-        return json_data
+        if (method in ['NEW', 'RAND']) or \
+            ((reject is None) and (accept_only is None)):
+            return self.recommend_new_rand(method, offset, limit, reject,\
+                    accept_only)
+
+        if method == 'NEIGH':
+            nearest = neigh.RecommendNearest()
+            dataset = features.load_features()
+            a = nearest.recommend(dataset, accept_only, reject, [])
+            query = "SELECT id, title, artist, file from MEDIA where id = " +\
+                        str(a) + ";"
+            return self.query_db(query)
+
+
+        return None
 
 
     def GET(self):
@@ -76,6 +100,7 @@ class Playlist():
         if 'accept' in data:
             data0 = web.input(accept=[])
             accept = data0.accept
+            print accept
         else:
             accept= None
 

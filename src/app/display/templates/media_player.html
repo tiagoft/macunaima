@@ -20,7 +20,7 @@ $_GET = function(name){
 
 //alert($_GET('accept'));
 
-str_query = "playlist?method=RAND&limit=1";
+str_query = "playlist?method=NEIGH&limit=1";
 curr_id = -1;
 
 reload = function(query) {
@@ -87,7 +87,7 @@ $(document).ready(function(){
       </p>
       <button id="Reject">Dislike</button>
       <button id="Reload">Skip</button>
-      <button id="Like">Like</button>
+      <button id="Accept">Like</button>
 
 
     </div>

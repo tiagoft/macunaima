@@ -100,7 +100,7 @@ def load_features():
         labels.append(d[0])
         features.append(json.loads(d[1]))
 
-    features = np.array(features).T
+    features = np.array(features)
     dset = data.Data()
     dset.insert_data(labels, features)
     return dset
