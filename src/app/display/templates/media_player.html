@@ -21,7 +21,31 @@ $_GET = function(name){
 //alert($_GET('accept'));
 
 str_query = "playlist?method=NEIGH&limit=1";
+var accept = [];
+var reject = [];
+var skip = [];
 curr_id = -1;
+
+
+function make_query(accept, reject, skip) {
+  if ((accept.length==0) && (reject.length==0) && (skip.length==0)) {
+  str_query = "playlist?method=RAND&limit=1";
+  return str_query;
+  }
+  else {
+    str_query = "playlist?method=NEIGH&limit=1";
+   for (i=0; i<accept.length; i++) {
+     str_query += "&accept=" + accept[i];
+   }
+   for (i=0; i<reject.length; i++) {
+     str_query += "&reject=" + reject[i];
+   }
+   for (i=0; i<skip.length; i++) {
+     str_query += "&skip=" + skip[i];
+   }
+   return str_query;
+  }
+}
 
 reload = function(query) {
   console.log(query);
@@ -48,19 +72,38 @@ reload = function(query) {
 }
 
 $(document).ready(function(){
+  var index;
   if ($_GET('accept') != null) {
   str_query += "&accept=" + $_GET('accept');
   }
   reload(str_query);
   $("#Reload").click(function(){
+    index = skip.indexOf(curr_id);
+    if (index < 0) {
+      skip.push(index);
+    }
+    str_query = make_query(accept, reject, skip);
     reload(str_query);
   });
   $("#Reject").click(function(){
-    str_query += "&reject=" + curr_id;
+    reject.push(curr_id);
+    index = accept.indexOf(curr_id);
+    if (index > -1) {
+      accept.splice(index);
+    }
+    str_query = make_query(accept, reject, skip);
     reload(str_query);
   });
   $("#Accept").click(function(){
-    str_query += "&accept=" + curr_id;
+    index = accept.indexOf(curr_id);
+    if (index < 0) {
+      accept.push(curr_id);
+    }
+    index = reject.indexOf(curr_id);
+    if (index > -1) {
+      reject.splice(index);
+    }
+
   });
 
 
