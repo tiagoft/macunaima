@@ -12,11 +12,13 @@ import mir3.modules.features.join as join
 import mir3.modules.tool.to_texture_window as tex
 
 import constants
+import data
 
 import numpy as np
 import json
 import sqlite3
 import os
+
 
 def mp3_to_wav(filename, directory):
     command = "mpg123 -w /tmp/tmp.wav " + directory + filename
@@ -99,7 +101,9 @@ def load_features():
         features.append(json.loads(d[1]))
 
     features = np.array(features).T
-    return labels, features
+    dset = data.Data()
+    dset.insert_data(labels, features)
+    return dset
 
 
 
