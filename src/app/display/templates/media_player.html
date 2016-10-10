@@ -80,7 +80,7 @@ $(document).ready(function(){
   $("#Reload").click(function(){
     index = skip.indexOf(curr_id);
     if (index < 0) {
-      skip.push(index);
+      skip.push(curr_id);
     }
     str_query = make_query(accept, reject, skip);
     reload(str_query);
