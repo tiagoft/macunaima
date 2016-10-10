@@ -88,8 +88,18 @@ def extract_all():
     conn.close()
 
 
+def load_features():
+    query = "select media_id, value from features where algorithm='gtzan'"
+    conn = sqlite3.connect(constants.dbfile)
+    c = conn.cursor()
+    labels = []
+    features = []
+    for d in c.execute(query):
+        labels.append(d[0])
+        features.append(json.loads(d[1]))
 
-
+    features = np.array(features).T
+    return labels, features
 
 
 
