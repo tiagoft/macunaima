@@ -59,19 +59,19 @@ class Playlist():
         return self.query_db(query)
 
     def get_json(self, method='NEW', offset=0, limit=10, reject=None,
-            accept_only=None):
+            accept_only=None, skip=None):
 
         print reject, accept_only
 
         if (method in ['NEW', 'RAND']) or \
             (accept_only is None):
-            return self.recommend_new_rand(method, offset, limit, reject,\
+            return self.recommend_new_rand(method, offset, limit, reject+skip,\
                     accept_only)
 
         if method == 'NEIGH':
             nearest = neigh.RecommendNearest()
             dataset = features.load_features()
-            a = nearest.recommend(dataset, accept_only, reject, [])
+            a = nearest.recommend(dataset, accept_only, reject, skip)
             query = "SELECT id, title, artist, file from MEDIA where id = " +\
                         str(a) + ";"
             return self.query_db(query)
@@ -97,12 +97,17 @@ class Playlist():
         else:
             rejection = None
 
+        if 'skip' in data:
+            data0 = web.input(skip=[])
+            skip = data0.skip
+        else:
+            skip = None
+
         if 'accept' in data:
             data0 = web.input(accept=[])
             accept = data0.accept
-            print accept
         else:
-            accept= None
+            accept = None
 
         if 'offset' in data:
             offset = data['offset']
@@ -117,7 +122,7 @@ class Playlist():
 
         web.header('Content-Type', 'text/plain')
         return self.get_json(method, reject=rejection, accept_only=accept,
-                offset=offset, limit=limit)
+                offset=offset, limit=limit, skip=skip)
 
 #        ret = ""
 #        for row in c.execute(query):

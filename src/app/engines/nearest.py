@@ -25,13 +25,12 @@ class RecommendNearest():
 
         for i in xrange(lin):
             if (str(dataset.labels[i]) not in likes) and \
-               (dataset.labels[i] not in dislikes) and \
-               (dataset.labels[i] not in skips):
+               (str(dataset.labels[i]) not in dislikes) and \
+               (str(dataset.labels[i]) not in skips):
                 analysis = dataset.data[i,:]
                 for j in xrange(len(likes)):
                     ref = dataset.data[dataset.labels.index(int(likes[j])),:]
                     dist = np.linalg.norm(analysis-ref)
-                    print dist
                     if dist < min_dist:
                         min_dist = dist
                         min_label = dataset.labels[i]
