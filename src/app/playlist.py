@@ -64,7 +64,7 @@ class Playlist():
         print reject, accept_only
 
         if (method in ['NEW', 'RAND']) or \
-            ((reject is None) and (accept_only is None)):
+            (accept_only is None):
             return self.recommend_new_rand(method, offset, limit, reject,\
                     accept_only)
 
