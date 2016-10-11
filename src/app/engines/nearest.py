@@ -21,7 +21,7 @@ class RecommendNearest():
         if skips is None:
             skips = []
 
-        print likes, dislikes, skips
+        #print likes, dislikes, skips
 
         for i in xrange(lin):
             if (str(dataset.labels[i]) not in likes) and \
