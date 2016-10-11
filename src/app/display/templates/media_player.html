@@ -86,7 +86,10 @@ $(document).ready(function(){
     reload(str_query);
   });
   $("#Reject").click(function(){
-    reject.push(curr_id);
+    index = reject.indexOf(curr_id);
+    if (index < 0) {
+      reject.push(curr_id);
+    }
     index = accept.indexOf(curr_id);
     if (index > -1) {
       accept.splice(index);
