@@ -26,8 +26,6 @@ class Playlist():
         conn.commit()
 
         json_data = json.dumps(json_data)
-        print query
-        print json_data
         return json_data
 
 
@@ -61,10 +59,13 @@ class Playlist():
     def get_json(self, method='NEW', offset=0, limit=10, reject=None,
             accept_only=None, skip=None):
 
-        print reject, accept_only
 
         if (method in ['NEW', 'RAND']) or \
             (accept_only is None):
+            if reject is None:
+                reject = []
+            if skip is None:
+                skip = []
             return self.recommend_new_rand(method, offset, limit, reject+skip,\
                     accept_only)
 

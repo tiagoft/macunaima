@@ -53,16 +53,10 @@ reload = function(query) {
   var json_action = $.getJSON(query, function(info){
     console.log(info);
     console.log(info[0].file + " " +  info[0].id);
-    //$(document).attr('location').href=window.location.href;
 
 
     $("#audio").attr("src", "static/" + info[0].file).detach().appendTo("#audiocontrols");
     $("#audiocontrols").load();
-/*
-    $("#audio").attr({
-       "src" : "static/" + info[0].file
-    });
-*/
     $("#title").text(info[0].title);
 
     curr_id = info[0].id;
@@ -71,44 +65,63 @@ reload = function(query) {
 
 }
 
+function get_next() {
+ index = skip.indexOf(curr_id);
+ if (index < 0) {
+  skip.push(curr_id);
+ }
+ str_query = make_query(accept, reject, skip);
+ reload(str_query);
+}
+
+function like() {
+ index = accept.indexOf(curr_id);
+ if (index < 0) {
+   accept.push(curr_id);
+ }
+ index = reject.indexOf(curr_id);
+ if (index > -1) {
+   reject.splice(index);
+ }
+}
+
+function dislike() {
+ index = reject.indexOf(curr_id);
+ if (index < 0) {
+   reject.push(curr_id);
+ }
+ index = accept.indexOf(curr_id);
+ if (index > -1) {
+   accept.splice(index);
+ }
+ str_query = make_query(accept, reject, skip);
+ reload(str_query);
+}
+
 $(document).ready(function(){
   var index;
   if ($_GET('accept') != null) {
   str_query += "&accept=" + $_GET('accept');
   }
   reload(str_query);
+/*
   $("#Reload").click(function(){
-    index = skip.indexOf(curr_id);
-    if (index < 0) {
-      skip.push(curr_id);
-    }
-    str_query = make_query(accept, reject, skip);
-    reload(str_query);
-  });
+    get_next();
+  });*/
+
   $("#Reject").click(function(){
-    index = reject.indexOf(curr_id);
-    if (index < 0) {
-      reject.push(curr_id);
-    }
-    index = accept.indexOf(curr_id);
-    if (index > -1) {
-      accept.splice(index);
-    }
-    str_query = make_query(accept, reject, skip);
-    reload(str_query);
+    dislike();
   });
+  /*
   $("#Accept").click(function(){
-    index = accept.indexOf(curr_id);
-    if (index < 0) {
-      accept.push(curr_id);
-    }
-    index = reject.indexOf(curr_id);
-    if (index > -1) {
-      reject.splice(index);
-    }
+    like();
+  });*/
 
+
+  $("#audiocontrols").bind('ended', function(){
+    like();
+    get_next();
   });
-
 
 });
 </script>
@@ -116,30 +129,33 @@ $(document).ready(function(){
 
 </head>
 
-<body>
-
+   <!-- <body> -->
+  <body style="max-width:400px">
 <div id="pagewidth">
   <div id="header">
     <h2 id="title"></h2>
   </div>
   <div id="wrapper">
-    <div id="maincol">
+    <div id="maincol" class="mediaplayer">
+      <center>
       <p>
-      <audio id="audiocontrols" controls width="720" height="405" autoplay>
+      <audio id="audiocontrols" controls width="300" height="105" autoplay>
 
       <source id="audio" src="static/audio/1/01_-_Trilha_01.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
       </audio>
       </p>
-      <button id="Reject">Dislike</button>
-      <button id="Reload">Skip</button>
-      <button id="Accept">Like</button>
+      <p>
+      <input type="image" src="static/img/recycle.png" width="50px" height="50px" id="Reject" class="imgbutton">
+      </p>
+      <!--Skip</button>-->
+<!--    <button id="Reload">Skip</button> -->
+<!--      <button id="Accept">Like</button> -->
 
-
+      </center>
     </div>
   </div>
   <div id="footer">
-  Copyleft?
   </div>
 </div>
 
