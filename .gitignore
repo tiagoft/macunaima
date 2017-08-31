@@ -12,7 +12,8 @@
 *.au
 
 # Symbolic links
-src/static/audio
+*audio
+*audio/
 
 *~
 *.swp
