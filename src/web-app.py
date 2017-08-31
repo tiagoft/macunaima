@@ -11,6 +11,7 @@ import app.insert
 import app.media
 import app.collection
 import app.playlist
+import app.initialize
 
 configuration = yaml.load(open('../config.yaml'))
 
@@ -27,11 +28,9 @@ except:
 
 urls = (
     '/hello', 'hello',
-    '/random', 'random',
+    '/random', 'app.initialize.GetRandom',
     '/media', 'app.media.Media',
-    '/collection', 'app.collection.Collection',
     '/info', 'info',
-    '/playlist', 'app.playlist.Playlist'
     )
 
 application = web.application(urls, globals()).wsgifunc()
@@ -46,14 +45,6 @@ class info:
     def GET(self):
         return configuration
 
-class random:
-    def GET(self):
-        d = configuration['data']['dir'] + configuration['data']['audio']
-        files = os.listdir(d)
-        return "<a href='static/" +\
-                configuration['data']['audio'] + files[0] +\
-                "'>Link</a>"
-
 
 #class shutdown:
 #    def GET(self):
@@ -63,5 +54,6 @@ class random:
 
 if __name__ == "__main__":
     application = web.application(urls, globals())
+    web.config.update({"configuration" : configuration})
     application.run()
 
