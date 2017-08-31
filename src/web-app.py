@@ -3,19 +3,31 @@ import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__)))
 
 import web
-from web.contrib.template import render_jinja
 
-import constants
+import yaml
 
-#import app.db.id3tosql
+import app.configure
 import app.insert
 import app.media
 import app.collection
 import app.playlist
 
+configuration = yaml.load(open('../config.yaml'))
+
+if configuration['debugmode'] == True:
+    print configuration
+
+# Ensure directory configuration is valid
+try:
+    dc = app.configure.ConfigureDirectories()
+    dc.configure(configuration['data'])
+except:
+    raise
+    exit()
+
 urls = (
-    '/shutdown', 'shutdown',
     '/hello', 'hello',
+    '/random', 'random',
     '/media', 'app.media.Media',
     '/collection', 'app.collection.Collection',
     '/info', 'info',
@@ -26,27 +38,28 @@ application = web.application(urls, globals()).wsgifunc()
 application.root_path = os.path.dirname(os.path.abspath(__file__))
 
 
-render = render_jinja(
-         os.path.dirname(__file__) + "/" + constants.template_directory,   # Set template directory.
-         encoding = 'utf-8',                         # Encoding.
-         )
-
 class hello:
     def GET(self):
-        p = app.insert.Insert(render)
-        return p.GET(None)
+        return configuration['hellostring']
 
 class info:
     def GET(self):
-        p = constants.dbfile + "<br>" + constants.files_directory
-        return p
+        return configuration
 
-
-class shutdown:
+class random:
     def GET(self):
-        application.stop()
-        exit()
-        return 0
+        d = configuration['data']['dir'] + configuration['data']['audio']
+        files = os.listdir(d)
+        return "<a href='static/" +\
+                configuration['data']['audio'] + files[0] +\
+                "'>Link</a>"
+
+
+#class shutdown:
+#    def GET(self):
+#        application.stop()
+#        exit()
+#        return 0
 
 if __name__ == "__main__":
     application = web.application(urls, globals())

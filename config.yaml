@@ -1,5 +1,6 @@
 
 data:
+  dir: "../data/"
   audio: "audio/"
   meta: "metadata/"
   user: "user/"
@@ -8,4 +9,6 @@ search:
   featureset: "gtzan"
   dbbackend: "builtin"
 
+debugmode: True
 
+hellostring: "<b>From inside the virgin woods was born Macunaima, hero of our people!</b>"

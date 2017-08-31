@@ -1,6 +1,7 @@
 # Databases
 *.db
 
+
 # Media
 *.mp3
 *.ogg
@@ -10,7 +11,9 @@
 *.aif
 *.au
 
-# Temporary files
+# Symbolic links
+src/static/audio
+
 *~
 *.swp
 
