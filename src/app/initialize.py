@@ -24,6 +24,7 @@ class GetRandom:
 
         data = {'session_id': session_id,
                 'recommendation': 'static/' + configuration['data']['audio'] +\
-                        files[0]}
+                        files[0],
+                'recommendation_number': 0}
 
         return data
