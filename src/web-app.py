@@ -7,11 +7,10 @@ import web
 import yaml
 
 import app.configure
-import app.insert
-import app.media
-import app.collection
-import app.playlist
 import app.initialize
+import app.info
+import app.recommend
+
 
 configuration = yaml.load(open('../config.yaml'))
 
@@ -29,28 +28,18 @@ except:
 urls = (
     '/hello', 'hello',
     '/initialize', 'app.initialize.GetRandom',
-    '/media', 'app.media.Media',
     '/info', 'app.info.GetInfo',
     '/info/(.+)', 'app.info.GetInfo',
-    '/skip/(.+)/(.+)', 'app.skip.Skip',
     '/recommend/(.+)/(.+)/(.+)', 'app.recommend.Recommend'
     )
 
 application = web.application(urls, globals()).wsgifunc()
 application.root_path = os.path.dirname(os.path.abspath(__file__))
 
-
 class hello:
     def GET(self):
         return configuration['hellostring']
 
-
-
-#class shutdown:
-#    def GET(self):
-#        application.stop()
-#        exit()
-#        return 0
 
 if __name__ == "__main__":
     application = web.application(urls, globals())
