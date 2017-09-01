@@ -16,7 +16,7 @@ class GetRandom:
         return enc.encode(data)
 
     def _generate_random(self, configuration):
-        d = configuration['data']['dir'] + configuration['data']['audio']
+        d = onfiguration['data']['dir'] + configuration['data']['audio']
         files = os.listdir(d)
         random.shuffle(files)
 
