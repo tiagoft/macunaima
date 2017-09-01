@@ -9,13 +9,13 @@ class GetInfo:
     def __init__(self):
         pass
 
-    def GET(self):
-        try:
-            json_data = json.loads(web.data())
-            data = json.JSONDecoder.decode(json_data)
-            primary_key = data['session_id']
-        except:
+    def GET(self, args=None):
+        if args is not None:
+            primary_key = args
+        else:
             primary_key = None
+
+        print primary_key
 
         elements = session.SessionDB().retrieve(primary_key)
         enc = json.JSONEncoder().encode(elements)

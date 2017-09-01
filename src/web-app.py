@@ -31,6 +31,8 @@ urls = (
     '/initialize', 'app.initialize.GetRandom',
     '/media', 'app.media.Media',
     '/info', 'app.info.GetInfo',
+    '/info/(.+)', 'app.info.GetInfo',
+    '/skip/(.+)/(.+)', 'app.skip',
     )
 
 application = web.application(urls, globals()).wsgifunc()
