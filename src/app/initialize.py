@@ -4,6 +4,7 @@ import os
 import random
 import web
 
+import session
 
 class GetRandom:
     def __init__(self):
@@ -13,10 +14,14 @@ class GetRandom:
         configuration = web.config.configuration
         data = self._generate_random(configuration)
         enc = json.JSONEncoder()
-        return enc.encode(data)
+        js_out = enc.encode(data)
+
+        session.SessionDB().insert(js_out)
+
+        return enc.encode(js_out)
 
     def _generate_random(self, configuration):
-        d = onfiguration['data']['dir'] + configuration['data']['audio']
+        d = configuration['data']['dir'] + configuration['data']['audio']
         files = os.listdir(d)
         random.shuffle(files)
 
