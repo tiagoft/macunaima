@@ -14,11 +14,9 @@ class GetRandom:
         configuration = web.config.configuration
         data = self._generate_random(configuration)
         enc = json.JSONEncoder()
-        js_out = enc.encode(data)
+        session.SessionDB().insert(data)
 
-        session.SessionDB().insert(js_out)
-
-        return enc.encode(js_out)
+        return enc.encode(data)
 
     def _generate_random(self, configuration):
         d = configuration['data']['dir'] + configuration['data']['audio']
@@ -28,6 +26,7 @@ class GetRandom:
         session_id = uuid.uuid4().hex
 
         data = {'session_id': session_id,
+                'response': 'init',
                 'recommendation': 'static/' + configuration['data']['audio'] +\
                         files[0]}
 

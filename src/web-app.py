@@ -32,7 +32,7 @@ urls = (
     '/media', 'app.media.Media',
     '/info', 'app.info.GetInfo',
     '/info/(.+)', 'app.info.GetInfo',
-    '/skip/(.+)/(.+)', 'app.skip',
+    '/skip/(.+)/(.+)', 'app.skip.Skip',
     )
 
 application = web.application(urls, globals()).wsgifunc()

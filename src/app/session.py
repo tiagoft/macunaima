@@ -7,16 +7,12 @@ class SessionDB:
     def __init__(self):
         pass
 
-    def insert(self, json_params):
+    def insert(self, params):
         """Inserts a new interaction into the SessionDB
         """
 
-        params = json.JSONDecoder().decode(json_params)
-
         if 'timestamp' not in params.keys():
             params['timestamp'] = time.time()
-
-        json_params = json.JSONEncoder().encode(params)
 
         db = tinydb.TinyDB(self._dbpath())
         db.insert(params)
