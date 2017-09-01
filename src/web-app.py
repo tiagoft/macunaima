@@ -28,9 +28,9 @@ except:
 
 urls = (
     '/hello', 'hello',
-    '/random', 'app.initialize.GetRandom',
+    '/initialize', 'app.initialize.GetRandom',
     '/media', 'app.media.Media',
-    '/info', 'info',
+    '/info', 'app.info.GetInfo',
     )
 
 application = web.application(urls, globals()).wsgifunc()
@@ -41,9 +41,6 @@ class hello:
     def GET(self):
         return configuration['hellostring']
 
-class info:
-    def GET(self):
-        return configuration
 
 
 #class shutdown:

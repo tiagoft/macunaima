@@ -1,4 +1,4 @@
-import hashlib
+import uuid
 import json
 import os
 import random
@@ -25,11 +25,10 @@ class GetRandom:
         files = os.listdir(d)
         random.shuffle(files)
 
-        session_id = hashlib.md5().hexdigest()
+        session_id = uuid.uuid4().hex
 
         data = {'session_id': session_id,
                 'recommendation': 'static/' + configuration['data']['audio'] +\
-                        files[0],
-                'recommendation_number': 0}
+                        files[0]}
 
         return data
