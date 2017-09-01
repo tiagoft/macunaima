@@ -33,6 +33,7 @@ urls = (
     '/info', 'app.info.GetInfo',
     '/info/(.+)', 'app.info.GetInfo',
     '/skip/(.+)/(.+)', 'app.skip.Skip',
+    '/recommend/(.+)/(.+)/(.+)', 'app.recommend.Recommend'
     )
 
 application = web.application(urls, globals()).wsgifunc()
