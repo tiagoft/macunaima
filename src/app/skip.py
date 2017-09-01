@@ -27,8 +27,7 @@ class Skip:
 
         response_data = {'session_id': session_id,
                 'response': 'recommend',
-                'recommendation': 'static/' + configuration['data']['audio'] +\
-                        recommendation}
+                'recommendation': recommendation}
 
         s.insert(interaction_data)
         s.insert(response_data)

@@ -12,7 +12,7 @@ class Engine:
         raise NotImplementedError
 
     def _split_positives_negatives(self, history):
-        pos = [k for k in history if 'action' in k.keys() and k['action']=='like']
-        neg = [k for k in history if 'action' in k.keys() and k['action']=='skip']
+        pos = [k['file'] for k in history if 'action' in k.keys() and k['action']=='like']
+        neg = [k['file'] for k in history if 'action' in k.keys() and k['action']=='skip']
         return pos, neg
 
