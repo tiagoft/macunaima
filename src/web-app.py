@@ -30,7 +30,7 @@ urls = (
     '/initialize', 'app.initialize.GetRandom',
     '/info', 'app.info.GetInfo',
     '/info/(.+)', 'app.info.GetInfo',
-    '/recommend/(.+)/(.+)/(.+)', 'app.recommend.Recommend'
+    '/recommend', 'app.recommend.Recommend'
     )
 
 application = web.application(urls, globals()).wsgifunc()

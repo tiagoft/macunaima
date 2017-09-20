@@ -9,29 +9,33 @@ class Recommend:
     def __init__(self):
         pass
 
-    def GET(self, action, session_id, media_file):
+    def POST(self):
         configuration = web.config.configuration
         s = session.SessionDB()
 
-        interaction_data = {'session_id': session_id,
-                'action': action,
-                'file': media_file,
+        print web.data()
+
+        post_data = json.loads(web.data())
+
+
+        interaction_data = {'session_id': str(post_data['session_id']),
+                'action': str(post_data['action']),
+                'file': str(post_data['media_file']),
                 'timestamp': time.time()}
 
         print interaction_data
 
-        history = s.retrieve(session_id)
+        history = s.retrieve(interaction_data['session_id'])
         history.append(interaction_data)
 
         # TODO: recommendation system goes here!
         rec = engines.dummy.Dummy('static/' + configuration['data']['audio'])
         recommendation = rec.retrieve(history)
 
-        response_data = {'session_id': session_id,
+        response_data = {'session_id': interaction_data['session_id'],
                 'response': 'recommend',
                 'recommendation': recommendation}
 
-        print response_data
 
         s.insert(interaction_data)
         s.insert(response_data)

@@ -8,14 +8,13 @@ Content-Based Media Exploration
 
 
 ### Get a new session ID
-curl -X GET http://localhost:8080/initialize
+`curl -X GET http://localhost:8080/initialize`
 
 ### Inform the system that you like a song
-curl -X GET http://localhost:8080/recommend/action/session-id/media-file
+`curl -H "Content-Type: application/json" -X POST -d '{"session\_id": "090b5ab14743bef753a219574135", "media\_file": "static/audio/test1.mp3", "action": "skip"}' http://localhost:8080/recommend`
 
 * Action must be either `like` or `skip`
-* Session-id is the session ID received when using initialize
-* media-file is the currently playing media file
+* Session\_id is the session ID received when using initialize
+* media\_file is the currently playing media file
 
-(TODO: solve session-id json reply in this response)
 

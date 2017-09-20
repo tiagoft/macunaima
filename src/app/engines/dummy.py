@@ -7,11 +7,16 @@ class Dummy(engine.Engine):
             [self.audiodb_path + i \
                 for i in os.listdir(self.audiodb_path)]
 
+
         print positives
         print negatives
-        filtered_files = [a for a in allowed_files\
-                            if a.split('/')[-1] not in (positives+negatives)]
+        print allowed_files
+        print positives + negatives
 
+        filtered_files = [a for a in allowed_files\
+                            if a not in (positives+negatives)]
+
+        print filtered_files
         if len(filtered_files)==0:
             return allowed_files[0]
         else:
