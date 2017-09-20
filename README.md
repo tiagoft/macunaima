@@ -17,5 +17,5 @@ curl -X GET http://localhost:8080/recommend/action/session-id/media-file
 * Session-id is the session ID received when using initialize
 * media-file is the currently playing media file
 
-
+(TODO: solve session-id json reply in this response)
 

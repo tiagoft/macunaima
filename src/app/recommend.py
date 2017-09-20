@@ -18,6 +18,8 @@ class Recommend:
                 'file': media_file,
                 'timestamp': time.time()}
 
+        print interaction_data
+
         history = s.retrieve(session_id)
         history.append(interaction_data)
 
@@ -29,7 +31,11 @@ class Recommend:
                 'response': 'recommend',
                 'recommendation': recommendation}
 
+        print response_data
+
         s.insert(interaction_data)
         s.insert(response_data)
 
-        return response_data
+        web.header('Content-Type', 'application/json')
+        enc = json.JSONEncoder()
+        return enc.encode(response_data)
