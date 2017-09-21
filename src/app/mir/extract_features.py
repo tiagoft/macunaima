@@ -7,10 +7,12 @@ def features(filename):
     """Extracts features from a file. Returns a dictionary
     """
     y, sr = librosa.core.load(filename, mono=True)
+    y -= np.mean(y)
+    y /= (np.var(y)**0.5)
     mfcc = librosa.feature.mfcc(y, sr, n_fft=2048, hop_length=512,
             power=1.0, n_mfcc=20)
     avg_mfcc = np.mean(mfcc, axis=1)
-    dict_out = {'filename': filename, 'features': list(avg_mfcc)}
+    dict_out = {'filename': filename, 'features': list(avg_mfcc[1:])}
 
     return dict_out
 
