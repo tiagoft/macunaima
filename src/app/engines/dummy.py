@@ -11,7 +11,7 @@ class Dummy(engine.Engine):
         print positives
         print negatives
         print allowed_files
-        print positives + negatives
+        print positives + negati
 
         filtered_files = [a for a in allowed_files\
                             if a not in (positives+negatives)]
