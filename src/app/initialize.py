@@ -30,7 +30,7 @@ class GetRandom:
             engine = 'dummy'
         else:
             rec = engines.Explorer('static/' + configuration['data']['audio'])
-            engine = 'exporer'
+            engine = 'explorer'
 
         recommendation = rec.retrieve([])
 
