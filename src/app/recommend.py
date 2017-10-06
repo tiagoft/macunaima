@@ -3,7 +3,7 @@ import session
 import time
 import web
 
-import engines.dummy
+import engines
 
 class Recommend:
     def __init__(self):
@@ -29,7 +29,15 @@ class Recommend:
         history.append(interaction_data)
 
         # TODO: recommendation system goes here!
-        rec = engines.dummy.Dummy('static/' + configuration['data']['audio'])
+        # Recommendation system selector (TODO: can I do this without hardcoding
+        # the recommendation systems?)
+        init_data = s.retrieve_init(interaction_data['session_id'])
+        if init_data['engine'] == 'dummy':
+            rec = engines.Dummy('static/' + configuration['data']['audio'])
+        elif init_data['engine'] == 'explorer':
+            rec = engines.Explorer('static/' + configuration['data']['audio'])
+
+        # Recommender system operation
         recommendation = rec.retrieve(history)
 
         response_data = {'session_id': interaction_data['session_id'],

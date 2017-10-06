@@ -31,6 +31,20 @@ class SessionDB:
         st = sorted(ret, key=lambda k: k['timestamp'])
         return st
 
+    def retrieve_init(self, primary_key):
+        """Gets the initial for a primary_key
+        """
+        db = tinydb.TinyDB(self._dbpath())
+        query = tinydb.Query()
+        if primary_key is not None:
+            ret = db.search((query.session_id == primary_key) &\
+                            (query.response == 'init'))
+        else:
+            return None
+
+        return ret
+
+
     def _dbpath(self):
         configuration = web.config.configuration
         d = configuration['data']['dir'] + configuration['data']['user']

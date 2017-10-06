@@ -61,6 +61,8 @@ class MacunaimaDBGenerator:
 
         return True
 
+
+
     def _audiopath(self):
         configuration = web.config.configuration
         d = configuration['data']['dir'] + configuration['data']['audio']
