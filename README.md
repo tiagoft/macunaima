@@ -24,6 +24,12 @@ A link in `src/static/audio` will also be created. It will point to
 `data/audio`. This will facilitate access to audio files in the recommendation
 process.
 
+## Feature calculation
+
+On server startup, the feature calculation module will extract feature vectors
+from all tracks within the audio directory and add them to the metadata
+database. It will skip features that have already been calculated.
+
 ## API
 This API description assumes you are running the Macunaima server locally. If
 you deploy the system to a webserver, please remember to change all references
@@ -63,4 +69,7 @@ The server will reply with a JSON string like this:
 It is the same string as in the `initialize` resource, but the response is
 `recommend` instead of `init`. This allows the client to keep track of all
 server recommendations.
+
+
+
 
