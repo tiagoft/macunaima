@@ -10,7 +10,7 @@ import app.configure
 import app.initialize
 import app.info
 import app.recommend
-
+import app.mir.metadata_extraction as meta
 
 configuration = yaml.load(open('../config.yaml'))
 
@@ -44,5 +44,9 @@ class hello:
 if __name__ == "__main__":
     application = web.application(urls, globals())
     web.config.update({"configuration" : configuration})
+
+    MDB = meta.MacunaimaDBGenerator()
+    MDB.operate_dir(True)
+
     application.run()
 
