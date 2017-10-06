@@ -1,3 +1,4 @@
+import numpy as np
 import tinydb
 import os
 import web
@@ -42,13 +43,30 @@ class SingleFileMetadataDBGenerator:
 
         return ret
 
+    def rnear_retrieve(self, target_vector, restricted_keys):
+        ret = self.retrieve(None)
+
+        best_distance = 9999999999999
+        best_key = None
+        for entry in ret:
+            if entry['file'] not in restricted_keys:
+                this_vector = np.array(entry['features'])
+                this_distance = np.sum( (this_vector - target_vector)**2 )
+                if this_distance < best_distance:
+                    best_key = entry['file']
+                    best_distance = this_distance
+
+        return best_key
+
+
 class MacunaimaDBGenerator:
     def __init__(self):
         pass
 
     def operate_dir(self, verbose=False):
-        audiopath = self._audiopath()
-        dbpath = self._dbpath()
+        d = DBPath()
+        audiopath = d._audiopath()
+        dbpath = d._dbpath()
         all_files = [audiopath + i \
                 for i in os.listdir(audiopath)]
 
@@ -62,6 +80,9 @@ class MacunaimaDBGenerator:
         return True
 
 
+class DBPath:
+    def __init__(self):
+        pass
 
     def _audiopath(self):
         configuration = web.config.configuration
@@ -74,7 +95,5 @@ class MacunaimaDBGenerator:
         metadatadb = configuration['search']['featureset'] + '.db'
         dbpath = d + metadatadb
         return dbpath
-
-
 
 

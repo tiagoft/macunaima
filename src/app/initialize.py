@@ -25,7 +25,7 @@ class GetRandom:
 
         random_selector = random.random()
         print random_selector
-        if random_selector > 0.5:
+        if random_selector > 1.5:
             rec = engines.Dummy('static/' + configuration['data']['audio'])
             engine = 'dummy'
         else:
@@ -36,9 +36,9 @@ class GetRandom:
 
         session_id = uuid.uuid4().hex
 
-        data = {'session_id': session_id,
-                'response': 'init',
-                'recommendation': recommendation,
-                'engine': engine}
+        data = {'session_id': str(session_id),
+                'response': str('init'),
+                'recommendation': str(recommendation),
+                'engine': str(engine)}
 
         return data
