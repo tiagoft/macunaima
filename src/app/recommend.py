@@ -32,9 +32,9 @@ class Recommend:
         # Recommendation system selector (TODO: can I do this without hardcoding
         # the recommendation systems?)
         init_data = s.retrieve_init(interaction_data['session_id'])
-        if init_data['engine'] == 'dummy':
+        if str(init_data['engine']) == 'dummy':
             rec = engines.Dummy('static/' + configuration['data']['audio'])
-        elif init_data['engine'] == 'explorer':
+        elif str(init_data['engine']) == 'explorer':
             rec = engines.Explorer('static/' + configuration['data']['audio'])
 
         # Recommender system operation

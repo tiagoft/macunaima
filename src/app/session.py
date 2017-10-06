@@ -42,7 +42,7 @@ class SessionDB:
         else:
             return None
 
-        return ret
+        return ret[0]
 
 
     def _dbpath(self):
