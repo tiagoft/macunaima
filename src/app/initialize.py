@@ -38,8 +38,7 @@ class GetRandom:
 
         data = {'session_id': session_id,
                 'response': 'init',
-                'recommendation': 'static/' + configuration['data']['audio'] +\
-                        recommendation,
+                'recommendation': recommendation,
                 'engine': engine}
 
         return data
