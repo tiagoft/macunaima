@@ -42,7 +42,21 @@ class Explorer(engine.Engine):
 
         # Recommendation goes here!
 
-        return self._recommend(metadb, d0, d1, a0, a1, filt_hist)
+        rec = self._recommend(metadb, d0, d1, a0, a1, filt_hist)
+        if rec is None:
+            print "Random recommendation! (F F)"
+            all_files = \
+                [self.audiodb_path + i \
+                    for i in os.listdir(self.audiodb_path)]
+
+            allowed_files = [i for i in all_files if i not in used_files]
+
+            if len(allowed_files)==0:
+                return used_files[-1]
+            else:
+                return random.choice(allowed_files)
+        else:
+            return rec
 
 
     def _recommend(self, metadb, d0, d1, a0, a1, filt_hist):
