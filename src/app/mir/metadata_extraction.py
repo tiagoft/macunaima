@@ -46,15 +46,17 @@ class SingleFileMetadataDBGenerator:
 
     def rnear_retrieve(self, target_vector, restricted_keys):
         ret = self.retrieve(None)
+        print "rnear_retrieve"
+        print target_vector
 
         best_distance = 9999999999999
         best_key = None
         for entry in ret:
-            if entry['file'] not in restricted_keys:
+            if entry['filename'].replace('../data', 'static') not in restricted_keys:
                 this_vector = np.array(entry['features'])
                 this_distance = np.sum( (this_vector - target_vector)**2 )
                 if this_distance < best_distance:
-                    best_key = entry['file']
+                    best_key = entry['filename'].replace('../data', 'static')
                     best_distance = this_distance
 
         return best_key

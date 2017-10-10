@@ -21,6 +21,7 @@ class Explorer(engine.Engine):
         # a0 = status of last track; a1 = status of 2nd last track
         a0, a1 = self._last_tracks_status(history)
 
+
         if a0 == False and a1 == False:
             print "Random recommendation! (F F)"
             all_files = \
@@ -34,52 +35,67 @@ class Explorer(engine.Engine):
             else:
                 return random.choice(allowed_files)
 
+        filt_hist = [h['recommendation'] for h in history\
+                if 'recommendation' in h.keys()]
+        d0 = self._get_vector(metadb, filt_hist, -1)
+        d1 = self._get_vector(metadb, filt_hist, -2)
+
+        # Recommendation goes here!
+
+        return self._recommend(metadb, d0, d1, a0, a1, filt_hist)
+
+
+    def _recommend(self, metadb, d0, d1, a0, a1, filt_hist):
+        print np.array(d0[0]['features'])
+        n0 = np.array(d0[0]['features'])
+
+        if (type(d1) is list) and (len(d1) > 0):
+            print np.array(d1[0]['features'])
+            n1 = np.array(d1[0]['features'])
+        else:
+            n1 = False
+
+        next_mean = self._explore(n0, n1, a0, a1)
+
+        print n0
+        print n1
+        print next_mean
+        db = meta.SingleFileMetadataDBGenerator(meta.DBPath()._dbpath())
+        ret = db.rnear_retrieve(next_mean, filt_hist)
+
+        return ret
+
+
+    def _explore(self, d0, d1, a0, a1):
+        """Gets next position
+        """
+        # Case 1: only one like
+        if type(d1) is bool:
+            if a0 == True:
+                return d0
+
         if a0 == False and a1 == True:
-            print "False Ture"
-            d0 = self._get_vector(metadb, history, -1)
-            d1 = self._get_vector(metadb, history, -3)
+            return d1
 
         if a0 == True and a1 == True:
-            print "True True"
-            d0 = self._get_vector(metadb, history, -1)
-            d1 = self._get_vector(metadb, history, -4)
+            return d0 + (d0-d1)
 
         if a0 == True and a1 == False:
-            print "True False!"
-            d0 = self._get_vector(metadb, history, -1)
-            d1 = self._get_vector(metadb, history, -3)
-
-        return self._recommend(metadb, d0, d1, a0, a1)
+            return d0
 
 
-    def _recommend(self, metadb, d0, d1, a0, a1):
-        print np.array(d0[0]['features'])
-        print np.array(d0[0]['filename'])
-        if len(d1) > 0:
-            print np.array(d1[0]['features'])
-            print np.array(d1[0]['filename'])
 
-        return False
-
-    def _get_vector(self, metadb, history, idx=-1):
+    def _get_vector(self, metadb, filt, idx=-1):
         """Returns feature vector for element with history idx
         """
         try:
-            print history[idx]
-            if 'recommendation' in history[idx].keys():
-                key = history[idx]['recommendation']
-            if 'media_file' in history[idx].keys():
-                 key = history[idx]['media_file']
-            if 'file' in history[idx].keys():
-                 key = history[idx]['file']
+            key = filt[idx]
+            data = metadb.retrieve(key)
+            return data
 
         except IndexError:
-            raise IndexError
+            return False
 
-        print key
-        data = metadb.retrieve(key)
-        print metadb.retrieve(None)
-        return data
 
 
 
