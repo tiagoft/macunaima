@@ -37,7 +37,8 @@ class SingleFileMetadataDBGenerator:
         db = tinydb.TinyDB(self.dbpath)
         query = tinydb.Query()
         if primary_key is not None:
-            ret = db.search(query.filename == primary_key)
+            pkey = primary_key.replace('static', '../data')
+            ret = db.search(query.filename == pkey)
         else:
             ret = db.all()
 

@@ -19,7 +19,6 @@ class Recommend:
 
         post_data = json.loads(web.data())
 
-
         interaction_data = {'session_id': str(post_data['session_id']),
                 'action': str(post_data['action']),
                 'file': str(post_data['media_file']),

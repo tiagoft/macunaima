@@ -41,4 +41,6 @@ class GetRandom:
                 'recommendation': str(recommendation),
                 'engine': str(engine)}
 
+        print data
+
         return data
