@@ -2,6 +2,7 @@ import uuid
 import json
 import os
 import random
+import time
 import web
 
 import engines
@@ -23,9 +24,10 @@ class GetRandom:
     def _generate_coldstart(self, configuration):
         d = configuration['data']['dir'] + configuration['data']['audio']
 
+        random.seed(time.time())
         random_selector = random.random()
         print random_selector
-        if random_selector > 1.5:
+        if random_selector > 0.5:
             rec = engines.Dummy('static/' + configuration['data']['audio'])
             engine = 'dummy'
         else:

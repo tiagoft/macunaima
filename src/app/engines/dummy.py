@@ -1,4 +1,6 @@
+import random
 import os
+
 import engine
 
 class Dummy(engine.Engine):
@@ -14,7 +16,7 @@ class Dummy(engine.Engine):
                             if a not in (positives+negatives)]
 
         if len(filtered_files)==0:
-            return allowed_files[0]
+            return random.choice(allowed_files[0])
         else:
             return filtered_files[0]
 
