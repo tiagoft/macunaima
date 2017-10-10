@@ -12,6 +12,7 @@ import app.info
 import app.recommend
 import app.mir.metadata_extraction as meta
 
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 configuration = yaml.load(open('../config.yaml'))
 
 if configuration['debugmode'] == True:
@@ -21,6 +22,7 @@ if configuration['debugmode'] == True:
 try:
     dc = app.configure.ConfigureDirectories()
     dc.configure(configuration['data'])
+
 except:
     raise
     exit()
