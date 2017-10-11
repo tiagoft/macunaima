@@ -28,6 +28,7 @@ except:
     exit()
 
 urls = (
+    '/', 'Index',
     '/hello', 'hello',
     '/initialize', 'app.initialize.GetRandom',
     '/info', 'app.info.GetInfo',
@@ -37,11 +38,16 @@ urls = (
 
 application = web.application(urls, globals()).wsgifunc()
 application.root_path = os.path.dirname(os.path.abspath(__file__))
+web.config.update({"configuration" : configuration})
 
 class hello:
     def GET(self):
         return configuration['hellostring']
 
+class Index:
+    def GET(self):
+        # redirect to the static file ...
+        raise web.seeother('/static/player/index.html')
 
 if __name__ == "__main__":
     application = web.application(urls, globals())
