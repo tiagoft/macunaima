@@ -92,7 +92,7 @@ class Explorer(engine.Engine):
             return d1
 
         if a0 == True and a1 == True:
-            return d0 + (d0-d1)
+            return (d0+d1)/2.0
 
         if a0 == True and a1 == False:
             return d0

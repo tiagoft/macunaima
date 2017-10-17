@@ -18,10 +18,10 @@ def features(filename):
     y /= (np.var(y)**0.5)
     mfcc = librosa.feature.mfcc(y, sr, n_fft=2048, hop_length=512,
             power=1.0, n_mfcc=20)
+
     avg_mfcc = np.mean(mfcc, axis=1)[1:]
     avg_mfcc /= vnorm
     dict_out = {'filename': filename, 'features': list(avg_mfcc)}
-
     return dict_out
 
 
