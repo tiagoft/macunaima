@@ -28,6 +28,7 @@ except:
     exit()
 
 urls = (
+    '', 'Index', 
     '/', 'Index',
     '/hello', 'hello',
     '/initialize', 'app.initialize.GetRandom',
